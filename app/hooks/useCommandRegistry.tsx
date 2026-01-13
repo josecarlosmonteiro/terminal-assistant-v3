@@ -6,11 +6,23 @@ import { taskServices } from "../services/tasks.services";
 import { CreateTaskView } from "../components/tasks/CreateTaskView";
 import { TTask } from "../types/services";
 import { ListTasksView } from "../components/tasks/ListTasksView";
+import { HelpView } from "../components/HelpView";
 
 export function useCommandResgistry() {
   const queryClient = useQueryClient();
 
   const registry: TRegistry = {
+    ajuda: {
+      commands: {
+        "": {
+          description: "Lista de comandos válidos",
+          usage: "ajuda",
+          action: async () => { },
+          View: HelpView,
+        }
+      },
+      targetNotFound: () => `Tente apenas "ajuda" para uma lista de comandos válidos`,
+    },
     criar: {
       commands: {
         tarefa: {
