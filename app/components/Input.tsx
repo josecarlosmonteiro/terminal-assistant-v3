@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, InputHTMLAttributes, KeyboardEvent, useRef } from "react";
+import { InputHTMLAttributes, KeyboardEvent, useRef } from "react";
 import { useCommandHistory } from "../hooks/useCommandHistory";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
