@@ -37,6 +37,7 @@ export function ListTasksView() {
         <table className="w-fit">
           <thead>
             <tr className="border-b-2 border-yellow-700">
+              <th className="px-4"></th>
               <th className="px-4">ID</th>
               <th className="px-4 text-left">Tarefa</th>
             </tr>
@@ -46,6 +47,9 @@ export function ListTasksView() {
             {
               data.map(task => (
                 <tr key={task.id}>
+                  <td className="px-4">
+                    {task.completed ? "🟢" : "🔴"}
+                  </td>
                   <td className="px-4">{task.id}</td>
                   <td className="px-4">{task.content}</td>
                 </tr>

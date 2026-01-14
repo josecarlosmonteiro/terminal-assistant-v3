@@ -1,4 +1,4 @@
-import { TCreateTask, TDeleteTask, TFindAllTasks } from "../types/tasks"
+import { TCompleteTask, TCreateTask, TDeleteTask, TFindAllTasks } from "../types/tasks"
 import { api } from "./api"
 
 const findAllTasks: TFindAllTasks = async () => {
@@ -16,8 +16,14 @@ const deleteTask: TDeleteTask = async (id) => {
   return response.data;
 }
 
+const completeTask: TCompleteTask = async (id) => {
+  const response = await api.patch(`/tasks/${id}`, { completed: true });
+  return response.data;
+}
+
 export const taskServices = {
   findAll: findAllTasks,
   create: createTask,
   delete: deleteTask,
+  complete: completeTask,
 }

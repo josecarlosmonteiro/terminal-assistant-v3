@@ -12,7 +12,7 @@ export function HelpView({ status }: TViewProps) {
 
   return (
     <div className="flex flex-col gap-4 mx-auto text-zinc-300 p-4 rounded bg-white/5 font-mono my-2">
-      <div className="text-yellow-500 font-bold border-b border-yellow-900/50 pb-1">
+      <div className="text-emerald-500 font-bold border-b border-yellow-900/50 pb-1">
         --- MANUAL DE COMANDOS DISPONÍVEIS ---
       </div>
 
@@ -51,7 +51,7 @@ export function HelpView({ status }: TViewProps) {
         </tbody>
       </table>
 
-      <footer className="text-zinc-600 text-[10px] mt-2 italic">
+      <footer className="text-zinc-600 text-sm mt-2 italic">
         * Use aspas para argumentos que contenham espaços. Ex: tarefa criar {'"Nova Tarefa"'}
       </footer>
     </div>

@@ -22,12 +22,12 @@ export function Input({ label, className, handleInput, ...rest }: Props) {
 
   return (
     <form onSubmit={onSubmit} className="flex items-center">
-      <label className="p-1 px-2 rounded-l-full text-cyan-500 font-semibold bg-white/10">{label} {"$>"}</label>
+      <label className="text-cyan-500 font-semibold">{label} {"$>"}</label>
       <input
         {...rest}
         ref={inputRef}
         type="text"
-        className={`p-1 px-2 grow rounded-r-full text-white outline-none bg-white/5 ${className}`}
+        className={`pl-1 grow text-white outline-none ${className}`}
         autoFocus
       />
     </form>

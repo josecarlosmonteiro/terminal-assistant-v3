@@ -14,12 +14,18 @@ export function DisplayTerminal({ history }: Props) {
     if (historyRef.current) {
       historyRef.current.scrollTop = historyRef.current.scrollHeight;
     }
-  }, [history])
+  }, [history]);
+
+  if (!history.length) return (
+    <div className="text-gray-600 font-semibold">
+      <i>Sistema pronto. Use {'"ajuda"'} para uma lista de comandos.</i>
+    </div>
+  )
 
   return (
     <div
       ref={historyRef}
-      className="h-[80vh] pr-4 flex flex-col gap-1 scroll-smooth overflow-auto custom-scrollbar"
+      className="max-h-[80vh] pr-4 flex flex-col gap-1 scroll-smooth overflow-auto custom-scrollbar"
     >
       {
         history.map(item => (

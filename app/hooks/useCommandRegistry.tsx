@@ -8,6 +8,7 @@ import { TTask } from "../types/tasks";
 import { ListTasksView } from "../components/tasks/ListTasksView";
 import { HelpView } from "../components/HelpView";
 import { DeleteTaskView } from "../components/tasks/DeleteTaskView";
+import { CompleteTaskView } from "../components/tasks/CompleteTaskView";
 
 export function useCommandResgistry() {
   const queryClient = useQueryClient();
@@ -34,6 +35,17 @@ export function useCommandResgistry() {
         }
       },
       targetNotFound: () => 'Use apenas "limpar"',
+    },
+    tarefas: {
+      commands: {
+        "": {
+          description: 'Lista todas as tarefas atualmente',
+          usage: 'tarefas',
+          action: async () => false,
+          View: ListTasksView,
+        }
+      },
+      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer listar?`
     },
     criar: {
       commands: {
@@ -80,6 +92,24 @@ export function useCommandResgistry() {
         }
       },
       targetNotFound: target => `Não entendi "${target}". O que exatamente você quer apagar?`
+    },
+    concluir: {
+      commands: {
+        tarefa: {
+          description: "Altera a tarefa para concluída",
+          usage: 'concluir tarefa "id_tarefa"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("Especifique a tarefa a ser concluída");
+            const result = await taskServices.complete(payload);
+
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
+            return result;
+          },
+          View: (props: TViewProps) => <CompleteTaskView {...props} />
+        },
+      },
+      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer concluir?`
     }
   }
 
