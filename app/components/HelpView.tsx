@@ -40,7 +40,7 @@ export function HelpView({ status }: TViewProps) {
             const definition = group.commands[firstSubKey];
 
             return (
-              <tr key={cmdName} className="hover:bg-white/[0.02] transition-colors">
+              <tr key={cmdName} className="hover:bg-white/2 transition-colors duration-300">
                 {/* Comando Oficial */}
                 <td className="px-4 py-3 align-top">
                   <span className="text-green-400 font-bold">{cmdName}</span>
@@ -58,14 +58,12 @@ export function HelpView({ status }: TViewProps) {
                 {/* Aliases Agrupados */}
                 <td className="px-4 py-3 align-top">
                   <div className="flex flex-wrap gap-1">
-                    {aliases.length > 0 ? (
+                    {aliases.length > 0 && (
                       aliases.map(alias => (
                         <span key={alias} className="text-zinc-500 text-xs bg-zinc-800 px-1.5 py-0.5 rounded">
                           {alias}
                         </span>
                       ))
-                    ) : (
-                      <span className="text-zinc-700 text-[10px] italic">nenhum</span>
                     )}
                   </div>
                 </td>
