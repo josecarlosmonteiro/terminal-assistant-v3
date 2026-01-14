@@ -23,10 +23,21 @@ export function useCommandResgistry() {
       },
       targetNotFound: () => `Tente apenas "ajuda" para uma lista de comandos válidos`,
     },
+    limpar: {
+      commands: {
+        "": {
+          description: 'Limpa o terminal',
+          usage: "limpar",
+          action: async () => false,
+          View: () => null,
+        }
+      },
+      targetNotFound: () => 'Use apenas "limpar"',
+    },
     criar: {
       commands: {
         tarefa: {
-          description: "Adicionar uma nova tarefa à lista",
+          description: "Adiciona uma nova tarefa à lista",
           usage: 'criar tarefa "nome da tarefa"',
           action: async ({ payload }) => {
             if (!payload) throw new Error("Especifique a tarefa a ser adicionada.");

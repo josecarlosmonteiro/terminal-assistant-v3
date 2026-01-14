@@ -8,12 +8,13 @@ import { useTerminalHistory } from "./hooks/useTerminalHistory";
 export default function Home() {
   const userLabel = "monteiro";
 
-  const { history, appendHistory, createItem, updateHistory } = useTerminalHistory();
+  const { history, appendHistory, createItem, updateHistory, clearHistory } = useTerminalHistory();
   const { execute } = useTerminalExecutor({
     userLabel,
     createHistoryItem: createItem,
     appendHistory,
     updateHistory,
+    clearHistory,
   })
 
   return (

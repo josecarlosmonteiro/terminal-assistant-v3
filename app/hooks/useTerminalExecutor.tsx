@@ -8,6 +8,7 @@ type Props = {
   createHistoryItem: (item: Omit<THistoryItem, 'id'>) => THistoryItem;
   appendHistory: (item: THistoryItem) => void;
   updateHistory: (id: string, updates: Partial<THistoryItem>) => void;
+  clearHistory: VoidFunction;
   userLabel?: string;
 }
 
@@ -16,6 +17,7 @@ export function useTerminalExecutor({
   createHistoryItem,
   appendHistory,
   updateHistory,
+  clearHistory,
 }: Props) {
 
   const { parse } = useCommandParser();
@@ -23,7 +25,9 @@ export function useTerminalExecutor({
 
   const execute = async (input: string) => {
     const { action, target, payload, flags } = parse(input);
-    const rawCommand = `${userLabel}$> ${input}`;
+    const rawCommand = `${userLabel} $> ${input}`;
+
+    if (action === 'limpar') return clearHistory();
 
     const commandGroup = registry[action];
 

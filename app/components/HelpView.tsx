@@ -5,46 +5,54 @@ import { useCommandResgistry } from "../hooks/useCommandRegistry";
 import { TViewProps } from "../types/terminal";
 
 export function HelpView({ status }: TViewProps) {
-  // O componente de ajuda consome o próprio registro do sistema
   const registry = useCommandResgistry();
-  const label = "sistema $>";
+  const label = "sistema>";
 
-  if (status === "error") return <div className="text-red-500">{label} Erro ao gerar ajuda.</div>;
+  if (status === "error") return <div className="text-red-500">{label} Erro ao gerar manual.</div>;
 
   return (
-    <div className="flex flex-col gap-4 p-4 rounded bg-white/5 text-zinc-300 font-mono">
-      <header>
-        <div className="text-yellow-500 font-bold">--- MANUAL DO SISTEMA ---</div>
-        <div className="text-zinc-500 text-xs">Lista de todos os comandos e domínios registrados.</div>
-      </header>
+    <div className="flex flex-col gap-4 text-zinc-300 p-4 rounded bg-white/5 font-mono my-2">
+      <div className="text-yellow-500 font-bold border-b border-yellow-900/50 pb-1">
+        --- MANUAL DE COMANDOS DISPONÍVEIS ---
+      </div>
 
-      {Object.entries(registry).map(([domain, group]) => (
-        <section key={domain} className="flex flex-col gap-2">
-          {/* Nome do Grupo (ex: TAREFA, SISTEMA) */}
-          <div className="text-blue-400 font-bold uppercase text-sm border-b border-zinc-800 w-fit">
-            [{domain}]
-          </div>
+      <table className="w-full text-left table-auto border-separate border-spacing-y-2">
+        <thead>
+          <tr className="text-zinc-500 text-xs uppercase tracking-widest">
+            <th className="px-2 py-1 border-b border-zinc-800">Domínio</th>
+            <th className="px-2 py-1 border-b border-zinc-800">Uso (Sintaxe)</th>
+            <th className="px-2 py-1 border-b border-zinc-800">Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(registry).map(([domain, group]) => (
+            // Percorremos cada subcomando dentro do domínio (grupo)
+            Object.entries(group.commands).map(([subCommand, def]) => (
+              <tr key={`${domain}-${subCommand}`} className="hover:bg-white/5 transition-colors group">
+                {/* Domínio: Mostrado apenas na primeira linha ou repetido de forma discreta */}
+                <td className="px-2 py-1 align-top">
+                  <span className="bg-zinc-800 text-blue-400 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold">
+                    {domain}
+                  </span>
+                </td>
 
-          <div className="flex flex-col gap-3 pl-4">
-            {Object.entries(group.commands).map(([subCommand, def]) => {
-              // Evitamos renderizar o próprio comando de ajuda na lista se desejar
-              if (domain === 'ajuda') return null;
+                {/* Uso: O comando real que o usuário deve digitar */}
+                <td className="px-2 py-1 align-top text-green-400 font-bold">
+                  {def.usage}
+                </td>
 
-              return (
-                <div key={subCommand} className="flex flex-col gap-1">
-                  <div className="flex items-center gap-3">
-                    <span className="text-green-500 min-w-30">Exemplo: {def.usage}</span>
-                    <span className="text-zinc-400 text-sm italic">{def.description}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      ))}
+                {/* Descrição: O que o comando faz */}
+                <td className="px-2 py-1 align-top text-zinc-400 text-sm leading-relaxed">
+                  {def.description}
+                </td>
+              </tr>
+            ))
+          ))}
+        </tbody>
+      </table>
 
-      <footer className="mt-2 text-zinc-600 text-[10px] uppercase tracking-tighter">
-        Fim do manual. Use as setas para navegar no histórico.
+      <footer className="text-zinc-600 text-[10px] mt-2 italic">
+        * Use aspas para argumentos que contenham espaços. Ex: tarefa criar {'"Nova Tarefa"'}
       </footer>
     </div>
   );

@@ -1,12 +1,16 @@
 {
   "tasks": [
     {
-      "id": "13c5",
-      "content": "novo item"
+      "id": "ba2c",
+      "content": "nova tarefa"
     },
     {
-      "id": "d805",
-      "content": "mais um item"
+      "id": "ea74",
+      "content": "nova tarefa reativa"
+    },
+    {
+      "id": "93c1",
+      "content": "implementar comando de remover tarefas"
     }
   ]
 }

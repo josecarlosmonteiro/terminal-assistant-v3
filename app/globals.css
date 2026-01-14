@@ -3,3 +3,37 @@
 body {
   @apply bg-gray-900 text-white;
 }
+
+@keyframes terminal-entry {
+  from {
+    opacity: 0;
+    transform: translateY(18px); /* Surge levemente de baixo para cima */
+    /* filter: blur(2px);          Começa levemente desfocado */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    /* filter: blur(0); */
+  }
+}
+
+.animate-terminal-line {
+  animation: terminal-entry .75s ease-out forwards;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4848ad; /* zinc-800 */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46; /* zinc-700 */
+}

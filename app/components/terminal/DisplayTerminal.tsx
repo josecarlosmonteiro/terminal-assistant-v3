@@ -17,10 +17,13 @@ export function DisplayTerminal({ history }: Props) {
   }, [history])
 
   return (
-    <div ref={historyRef} className="flex flex-col gap-1 scroll-smooth overflow-auto">
+    <div
+      ref={historyRef}
+      className="h-[80vh] pr-4 flex flex-col gap-1 scroll-smooth overflow-auto custom-scrollbar"
+    >
       {
         history.map(item => (
-          <div key={item.id} className="flex flex-col gap-1 anim-fade-in">
+          <div key={item.id} className="flex flex-col gap-1 animate-terminal-line">
             <span>{item.rawCommand}</span>
 
             <item.View {...item} />
