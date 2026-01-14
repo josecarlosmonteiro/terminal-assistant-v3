@@ -1,5 +1,6 @@
 'use client';
 
+import { COMMAND_ALIASES } from "../constants/COMMAND_ALIASES";
 import { THistoryItem } from "../types/terminal";
 import { useCommandParser } from "./useCommandParser";
 import { useCommandResgistry } from "./useCommandRegistry";
@@ -27,9 +28,11 @@ export function useTerminalExecutor({
     const { action, target, payload, flags } = parse(input);
     const rawCommand = `${userLabel} $> ${input}`;
 
-    if (action === 'limpar') return clearHistory();
+    const actionName = COMMAND_ALIASES[action] || action;
 
-    const commandGroup = registry[action];
+    if (actionName === 'limpar') return clearHistory();
+
+    const commandGroup = registry[actionName];
 
     if (!commandGroup) {
       const errorItem = createHistoryItem({
@@ -48,7 +51,7 @@ export function useTerminalExecutor({
       const errorItem = createHistoryItem({
         rawCommand,
         status: 'error',
-        error: commandGroup.targetNotFound(target),
+        error: commandGroup.targetNotFound ? commandGroup.targetNotFound(target) : `Target "${target}" não encontrado.`,
         View: ({ error }) => <div className="text-red-500 italic">sistema {"$>"} {error}</div>
       });
 

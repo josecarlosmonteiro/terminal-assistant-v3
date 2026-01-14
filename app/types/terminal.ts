@@ -27,7 +27,7 @@ export type TCommandDefinition = {
 
 export type TCommandRegistryGroup = {
   commands: Record<string, TCommandDefinition>;
-  targetNotFound: (target: string) => string;
+  targetNotFound?: (target: string) => string;
 }
 
 export type THistoryItem = {

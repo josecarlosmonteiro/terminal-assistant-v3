@@ -7,7 +7,13 @@
     },
     {
       "id": "e40a",
-      "content": "implementar controle de tarefas concluídas"
+      "content": "implementar controle de tarefas concluídas",
+      "completed": true
+    },
+    {
+      "id": "e402",
+      "content": "pesquisar lógica para comandos sinônimos",
+      "completed": true
     }
   ]
 }

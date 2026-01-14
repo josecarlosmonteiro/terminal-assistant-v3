@@ -43,9 +43,8 @@ export function useCommandResgistry() {
           usage: 'tarefas',
           action: async () => false,
           View: ListTasksView,
-        }
-      },
-      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer listar?`
+        },
+      }
     },
     criar: {
       commands: {
@@ -63,35 +62,25 @@ export function useCommandResgistry() {
           },
           View: (props: TViewProps<TTask>) => <CreateTaskView {...props} />
         }
-      },
-      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer criar?`
+      }
     },
-    listar: {
-      commands: {
-        tarefas: {
-          description: 'Lista todas as tarefas atualmente',
-          usage: 'listar tarefas',
-          action: async () => false,
-          View: ListTasksView,
-        }
-      },
-      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer listar?`
-    },
-    remover: {
+    nova: {
       commands: {
         tarefa: {
-          description: "Remove uma tarefa a partir do seu ID",
-          usage: 'remover tarefa "ab01"',
+          description: "Adiciona uma nova tarefa à lista",
+          usage: 'nova tarefa "nome da tarefa"',
           action: async ({ payload }) => {
-            if (!payload) throw new Error("tarefa não reconhecida");
+            if (!payload) throw new Error("Especifique a tarefa a ser adicionada.");
 
-            await taskServices.delete(payload);
+            const result = await taskServices.create(payload);
+
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
+            return result;
           },
-          View: props => <DeleteTaskView {...props} />
+          View: (props: TViewProps<TTask>) => <CreateTaskView {...props} />
         }
-      },
-      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer apagar?`
+      }
     },
     concluir: {
       commands: {
@@ -107,9 +96,23 @@ export function useCommandResgistry() {
             return result;
           },
           View: (props: TViewProps) => <CompleteTaskView {...props} />
-        },
-      },
-      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer concluir?`
+        }
+      }
+    },
+    remover: {
+      commands: {
+        tarefa: {
+          description: "Remove uma tarefa a partir do seu ID",
+          usage: 'remover tarefa "ab01"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("tarefa não reconhecida");
+
+            await taskServices.delete(payload);
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+          },
+          View: props => <DeleteTaskView {...props} />
+        }
+      }
     }
   }
 

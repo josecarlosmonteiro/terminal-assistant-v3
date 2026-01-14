@@ -1,6 +1,7 @@
 'use client'
 
 import { THistoryItem } from "@/app/types/terminal"
+import { delay } from "@/app/utils/delay";
 import { useEffect, useRef } from "react";
 
 type Props = {
@@ -11,9 +12,13 @@ export function DisplayTerminal({ history }: Props) {
   const historyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (historyRef.current) {
-      historyRef.current.scrollTop = historyRef.current.scrollHeight;
-    }
+    (async function() {
+      await delay(10);
+
+      if (historyRef.current) {
+        historyRef.current.scrollTop = historyRef.current.scrollHeight;
+      }
+    })()
   }, [history]);
 
   if (!history.length) return (
