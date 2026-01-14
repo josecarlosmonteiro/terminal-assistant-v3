@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "id": "93c1",
+      "content": "implementar comando de remover tarefas",
+      "completed": true
+    },
+    {
+      "id": "e40a",
+      "content": "implementar controle de tarefas concluídas"
+    }
+  ]
+}
