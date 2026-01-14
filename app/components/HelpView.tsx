@@ -74,7 +74,7 @@ export function HelpView({ status }: TViewProps) {
       </table>
 
       <footer className="text-zinc-600 text-sm mt-2 italic">
-        * Use aspas para argumentos que contenham espaços. Ex: tarefa criar {'"Nova Tarefa"'}
+        * Use aspas para argumentos que contenham espaços. Ex: criar tarefa {'"Nova Tarefa"'}
       </footer>
     </div>
   );
