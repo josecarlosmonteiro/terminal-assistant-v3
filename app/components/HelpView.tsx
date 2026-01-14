@@ -11,17 +11,17 @@ export function HelpView({ status }: TViewProps) {
   if (status === "error") return <div className="text-red-500">{label} Erro ao gerar manual.</div>;
 
   return (
-    <div className="flex flex-col gap-4 text-zinc-300 p-4 rounded bg-white/5 font-mono my-2">
+    <div className="flex flex-col gap-4 mx-auto text-zinc-300 p-4 rounded bg-white/5 font-mono my-2">
       <div className="text-yellow-500 font-bold border-b border-yellow-900/50 pb-1">
         --- MANUAL DE COMANDOS DISPONÍVEIS ---
       </div>
 
-      <table className="w-full text-left table-auto border-separate border-spacing-y-2">
+      <table className="w-fit text-left table-auto border-separate border-spacing-y-2">
         <thead>
           <tr className="text-zinc-500 text-xs uppercase tracking-widest">
-            <th className="px-2 py-1 border-b border-zinc-800">Domínio</th>
-            <th className="px-2 py-1 border-b border-zinc-800">Uso (Sintaxe)</th>
-            <th className="px-2 py-1 border-b border-zinc-800">Descrição</th>
+            <th className="px-4 pr-16 py-1 border-b border-zinc-800">Comando</th>
+            <th className="px-4 pr-16 py-1 border-b border-zinc-800">Descrição</th>
+            <th className="px-4 pr-16 py-1 border-b border-zinc-800">Uso (Sintaxe)</th>
           </tr>
         </thead>
         <tbody>
@@ -30,20 +30,20 @@ export function HelpView({ status }: TViewProps) {
             Object.entries(group.commands).map(([subCommand, def]) => (
               <tr key={`${domain}-${subCommand}`} className="hover:bg-white/5 transition-colors group">
                 {/* Domínio: Mostrado apenas na primeira linha ou repetido de forma discreta */}
-                <td className="px-2 py-1 align-top">
-                  <span className="bg-zinc-800 text-blue-400 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold">
+                <td className="px-4 pr-16 py-1 align-top">
+                  <span className="text-blue-400 uppercase font-bold">
                     {domain}
                   </span>
                 </td>
 
-                {/* Uso: O comando real que o usuário deve digitar */}
-                <td className="px-2 py-1 align-top text-green-400 font-bold">
-                  {def.usage}
+                {/* Descrição: O que o comando faz */}
+                <td className="px-4 pr-16 py-1 align-top text-zinc-400 text-sm leading-relaxed">
+                  {def.description}
                 </td>
 
-                {/* Descrição: O que o comando faz */}
-                <td className="px-2 py-1 align-top text-zinc-400 text-sm leading-relaxed">
-                  {def.description}
+                {/* Uso: O comando real que o usuário deve digitar */}
+                <td className="px-4 pr-16 py-1 align-top text-green-400 font-bold">
+                  {def.usage}
                 </td>
               </tr>
             ))
