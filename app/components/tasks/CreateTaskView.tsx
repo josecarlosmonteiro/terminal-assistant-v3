@@ -1,4 +1,4 @@
-import { TTask } from "@/app/types/services";
+import { TTask } from "@/app/types/tasks";
 import { TViewProps } from "@/app/types/terminal";
 
 export function CreateTaskView({ status, data, error }: TViewProps<TTask>) {

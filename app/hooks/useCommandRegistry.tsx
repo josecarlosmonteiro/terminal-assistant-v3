@@ -4,9 +4,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { TRegistry, TViewProps } from "../types/terminal";
 import { taskServices } from "../services/tasks.services";
 import { CreateTaskView } from "../components/tasks/CreateTaskView";
-import { TTask } from "../types/services";
+import { TTask } from "../types/tasks";
 import { ListTasksView } from "../components/tasks/ListTasksView";
 import { HelpView } from "../components/HelpView";
+import { DeleteTaskView } from "../components/tasks/DeleteTaskView";
 
 export function useCommandResgistry() {
   const queryClient = useQueryClient();
@@ -63,6 +64,22 @@ export function useCommandResgistry() {
         }
       },
       targetNotFound: target => `Não entendi "${target}". O que exatamente você quer listar?`
+    },
+    remover: {
+      commands: {
+        tarefa: {
+          description: "Remove uma tarefa a partir do seu ID",
+          usage: 'remover tarefa "ab01"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("tarefa não reconhecida");
+
+            await taskServices.delete(payload);
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+          },
+          View: props => <DeleteTaskView {...props} />
+        }
+      },
+      targetNotFound: target => `Não entendi "${target}". O que exatamente você quer apagar?`
     }
   }
 

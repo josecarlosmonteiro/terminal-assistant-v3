@@ -1,4 +1,4 @@
-import { TCreateTask, TFindAllTasks } from "../types/services"
+import { TCreateTask, TDeleteTask, TFindAllTasks } from "../types/tasks"
 import { api } from "./api"
 
 const findAllTasks: TFindAllTasks = async () => {
@@ -11,7 +11,13 @@ const createTask: TCreateTask = async (content) => {
   return response.data;
 }
 
+const deleteTask: TDeleteTask = async (id) => {
+  const response = await api.delete(`/tasks/${id}`);
+  return response.data;
+}
+
 export const taskServices = {
   findAll: findAllTasks,
   create: createTask,
+  delete: deleteTask,
 }

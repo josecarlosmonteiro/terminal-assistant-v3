@@ -1,16 +1,12 @@
 {
   "tasks": [
     {
-      "id": "ba2c",
-      "content": "nova tarefa"
-    },
-    {
-      "id": "ea74",
-      "content": "nova tarefa reativa"
-    },
-    {
       "id": "93c1",
       "content": "implementar comando de remover tarefas"
+    },
+    {
+      "id": "e40a",
+      "content": "implementar controle de tarefas concluídas"
     }
   ]
 }
