@@ -1,6 +1,7 @@
 'use client';
 
-import { FormEvent, InputHTMLAttributes, useRef } from "react";
+import { FormEvent, InputHTMLAttributes, KeyboardEvent, useRef } from "react";
+import { useCommandHistory } from "../hooks/useCommandHistory";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,27 +10,43 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 export function Input({ label, className, handleInput, ...rest }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const { addToStack, getPrevious, getNext } = useCommandHistory();
 
-  const onSubmit = (ev: FormEvent) => {
-    ev.preventDefault();
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (!inputRef.current) return;
 
-    if (!inputRef || !inputRef.current) return;
+    const value = inputRef.current.value;
 
-    handleInput(inputRef.current.value);
+    if (event.key === 'Enter' && value.trim()) {
+      addToStack(value);
+      handleInput(value);
+      inputRef.current.value = "";
+    }
 
-    inputRef.current.value = "";
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      const prev = getPrevious();
+      if (!!prev) inputRef.current.value = prev;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const next = getNext();
+      inputRef.current.value = next;
+    }
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center">
+    <div className="flex items-center">
       <label className="text-cyan-500 font-semibold">{label} {"$>"}</label>
       <input
         {...rest}
         ref={inputRef}
         type="text"
         className={`pl-1 grow text-white outline-none ${className}`}
+        onKeyDown={handleKeyDown}
         autoFocus
       />
-    </form>
+    </div>
   )
 }
