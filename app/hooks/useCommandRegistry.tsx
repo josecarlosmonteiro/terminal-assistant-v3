@@ -1,0 +1,120 @@
+'use client'
+
+import { useQueryClient } from "@tanstack/react-query";
+import { TRegistry, TViewProps } from "../types/terminal";
+import { taskServices } from "../services/tasks.services";
+import { CreateTaskView } from "../components/tasks/CreateTaskView";
+import { TTask } from "../types/tasks";
+import { ListTasksView } from "../components/tasks/ListTasksView";
+import { HelpView } from "../components/HelpView";
+import { DeleteTaskView } from "../components/tasks/DeleteTaskView";
+import { CompleteTaskView } from "../components/tasks/CompleteTaskView";
+
+export function useCommandResgistry() {
+  const queryClient = useQueryClient();
+
+  const registry: TRegistry = {
+    ajuda: {
+      commands: {
+        "": {
+          description: "Lista de comandos válidos",
+          usage: "ajuda",
+          action: async () => { },
+          View: HelpView,
+        }
+      },
+      targetNotFound: () => `Tente apenas "ajuda" para uma lista de comandos válidos`,
+    },
+    limpar: {
+      commands: {
+        "": {
+          description: 'Limpa o terminal',
+          usage: "limpar",
+          action: async () => false,
+          View: () => null,
+        }
+      },
+      targetNotFound: () => 'Use apenas "limpar"',
+    },
+    tarefas: {
+      commands: {
+        "": {
+          description: 'Lista todas as tarefas atualmente',
+          usage: 'tarefas',
+          action: async () => false,
+          View: ListTasksView,
+        },
+      }
+    },
+    criar: {
+      commands: {
+        tarefa: {
+          description: "Adiciona uma nova tarefa à lista",
+          usage: 'criar tarefa "nome da tarefa"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("Especifique a tarefa a ser adicionada.");
+
+            const result = await taskServices.create(payload);
+
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
+            return result;
+          },
+          View: (props: TViewProps<TTask>) => <CreateTaskView {...props} />
+        }
+      }
+    },
+    nova: {
+      commands: {
+        tarefa: {
+          description: "Adiciona uma nova tarefa à lista",
+          usage: 'nova tarefa "nome da tarefa"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("Especifique a tarefa a ser adicionada.");
+
+            const result = await taskServices.create(payload);
+
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
+            return result;
+          },
+          View: (props: TViewProps<TTask>) => <CreateTaskView {...props} />
+        }
+      }
+    },
+    concluir: {
+      commands: {
+        tarefa: {
+          description: "Altera a tarefa para concluída",
+          usage: 'concluir tarefa "id_tarefa"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("Especifique a tarefa a ser concluída");
+            const result = await taskServices.complete(payload);
+
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
+            return result;
+          },
+          View: (props: TViewProps) => <CompleteTaskView {...props} />
+        }
+      }
+    },
+    remover: {
+      commands: {
+        tarefa: {
+          description: "Remove uma tarefa a partir do seu ID",
+          usage: 'remover tarefa "ab01"',
+          action: async ({ payload }) => {
+            if (!payload) throw new Error("tarefa não reconhecida");
+
+            await taskServices.delete(payload);
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+          },
+          View: props => <DeleteTaskView {...props} />
+        }
+      }
+    }
+  }
+
+  return registry;
+}
