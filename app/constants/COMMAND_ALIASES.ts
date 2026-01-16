@@ -24,7 +24,6 @@ export const REMOVE_COMMAND_ALIASES: Record<string, string> = {
 export const GLOBAL_COMMAND_ALIASES: Record<string, string> = {
   "clear": "limpar",
   "cls": "limpar",
-  "ajuda": "ajuda",
   "help": "ajuda",
 }
 

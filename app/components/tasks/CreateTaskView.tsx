@@ -13,10 +13,4 @@ export function CreateTaskView({ status, data, error }: TViewProps<TTask>) {
       {label} {error}
     </div>
   )
-
-  return (
-    <div className="text-yellow-500">
-      {label} tarefa criada com sucesso! ID: {data?.id}
-    </div>
-  )
 }

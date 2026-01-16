@@ -14,6 +14,11 @@
       "id": "e402",
       "content": "pesquisar lógica para comandos sinônimos",
       "completed": true
+    },
+    {
+      "id": "b3ce",
+      "content": "implementar caixa de auto-complete",
+      "completed": true
     }
   ]
 }

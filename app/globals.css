@@ -7,9 +7,8 @@ body {
 @keyframes terminal-entry {
   from {
     opacity: 0;
-    /* transform: translateY(8px); Surge levemente de baixo para cima */
-    /* filter: blur(2px);          Começa levemente desfocado */
   }
+
   to {
     opacity: 1;
     /* transform: translateY(0); */
@@ -21,6 +20,15 @@ body {
   animation: terminal-entry .3s ease-out forwards;
 }
 
+@keyframes suggestions-box {
+  from { opacity: 0.5; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.animate-suggestions-box {
+  animation: suggestions-box 300ms ease-in-out;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -30,10 +38,12 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #4848ad; /* zinc-800 */
+  background: #4848ad;
+  /* zinc-800 */
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #494428; /* zinc-700 */
+  background: #494428;
+  /* zinc-700 */
 }

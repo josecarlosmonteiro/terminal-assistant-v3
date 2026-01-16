@@ -22,7 +22,7 @@ export function DisplayTerminal({ history }: Props) {
   }, [history]);
 
   if (!history.length) return (
-    <div className="text-gray-600 font-semibold">
+    <div className="h-[80vh] text-gray-600 font-semibold">
       <i>Sistema pronto. Use {'"ajuda"'} para uma lista de comandos.</i>
     </div>
   )
@@ -30,7 +30,7 @@ export function DisplayTerminal({ history }: Props) {
   return (
     <div
       ref={historyRef}
-      className="max-h-[80vh] pr-4 flex flex-col gap-1 scroll-smooth overflow-auto custom-scrollbar"
+      className="h-[80vh] pr-4 flex flex-col gap-1 scroll-smooth overflow-auto custom-scrollbar"
     >
       {
         history.map(item => (
