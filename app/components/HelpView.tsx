@@ -28,6 +28,7 @@ export function HelpView({ status }: TViewProps) {
           <tr className="text-zinc-500 text-xs uppercase tracking-widest">
             <th className="px-4 pr-16 py-1 border-b border-zinc-800">Comando Principal</th>
             <th className="px-4 pr-16 py-1 border-b border-zinc-800">Sintaxe</th>
+            <th className="px-4 pr-16 py-1 border-b border-zinc-800">Exemplo</th>
             <th className="px-4 pr-16 py-1 border-b border-zinc-800">Sinônimos Aceitos</th>
           </tr>
         </thead>
@@ -49,10 +50,13 @@ export function HelpView({ status }: TViewProps) {
                 <td className="px-4 py-3 align-top">
                   <div className="flex flex-col gap-1">
                     <span className="text-zinc-300 text-sm">{definition.description}</span>
-                    <code className="text-zinc-600 text-sm mt-1 italic">
-                      Ex: {definition.usage}
-                    </code>
                   </div>
+                </td>
+
+                <td className="px-4 py-3 align-top">
+                  <code className="text-zinc-600 text-sm mt-1 italic">
+                    Ex: {definition.usage}
+                  </code>
                 </td>
 
                 {/* Aliases Agrupados */}
